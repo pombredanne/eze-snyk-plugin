@@ -26,7 +26,7 @@ REQUIREMENTS_FILE = "requirements.txt"
 # REPORT CONFIG
 # ========================================
 [eze]
-# CONSOLE_ENDPOINT = "https://lff3adj48f.execute-api.eu-west-2.amazonaws.com/staging"
+CONSOLE_ENDPOINT = "https://lff3adj48f.execute-api.eu-west-2.amazonaws.com/staging"
 CODEBASE_ID = "eb967423-22ec-4c80-b744-6a2d061e7b6c"
 
 [console]
