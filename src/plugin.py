@@ -1,5 +1,5 @@
 """Lists out the inbuilt plugins in Project"""
-from src.snyk import SnykTool
+from src.snyk import SnykTool, SnykContainerTool, SnykIacTool
 
 
 def get_reporters() -> dict:
@@ -11,4 +11,6 @@ def get_tools() -> dict:
     """Return the tools in plugin"""
     return {
         "snyk": SnykTool,
+        "snyk-container": SnykContainerTool,
+        "snyk-iac": SnykIacTool,
     }

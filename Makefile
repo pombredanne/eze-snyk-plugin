@@ -10,15 +10,19 @@
 # DEVELOPER COMMANDS
 ##############################################
 
+# install local eze package and other packages to start programming your plugin for Eze
 install:
-	python -m pip install -r requirements.txt
+	python -m pip install -r requirements-dev.txt
 
+# to check formatting of your code
 lint:
 	black src
+	
+test:
+	python -m pytest tests -vv --cov=src --cov-branch --cov-report=term-missing --cov-report html:reports/coverage/cov_html --cov-report=xml:reports/coverage/coverage.xml --junitxml=reports/xunit/test-results.xml -o junit_family=xunit1 || true
 
-# install local eze package
-cli-install: 
-	pip install eze-cli
+test-snapshot-update:
+	python -m pytest tests --snapshot-update
 
 ##############################################
 # PLUGIN PACKAGE COMMANDS
