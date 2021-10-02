@@ -18,7 +18,6 @@ IGNORE_BELOW_SEVERITY = "medium"
 
 [trufflehog]
 SOURCE = ["."]
-REPORT_FILE = "reports/truffleHog-python-report.json"
 EXCLUDE = [
     ".*(node_modules|target|build|dist)$",
     ".*\\.(jpe?g|png|svg|eot|ttf|exe|map|lock|woff|pytest_cache)$",
