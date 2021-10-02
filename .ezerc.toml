@@ -27,6 +27,9 @@ EXCLUDE = [
     "tests/"
 ]
 
+[trufflehog.ci]
+INCLUDE_FULL_REASON = false
+
 [python-cyclonedx]
 REQUIREMENTS_FILE = "requirements.txt"
 
@@ -55,5 +58,5 @@ tools = ["python-piprot", "python-bandit", "semgrep", "python-safety", "python-c
 reporters = ["json", "console", "bom"]
 
 [scan.ci]
-tools = ["python-piprot", "python-bandit", "python-safety", "python-cyclonedx", "trufflehog"]
+tools = ["python-piprot", "python-bandit", "python-safety", "python-cyclonedx", "trufflehog:ci"]
 reporters = ["console", "eze"]
