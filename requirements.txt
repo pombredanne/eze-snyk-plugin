@@ -1,1 +1,1 @@
-eze-cli
+eze-cli==0.9.0a0
