@@ -1,0 +1,52 @@
+# Python: Eze Snyk Plugin Compile
+# https://docs.microsoft.com/azure/devops/pipelines/languages/python
+
+trigger:
+  - main
+  
+pool:
+  vmImage: ubuntu-latest
+strategy:
+  matrix:
+    Python38:
+      python.version: '3.8'
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '$(python.version)'
+    displayName: 'Use Python $(python.version)'
+
+  - script: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+    displayName: 'Install Dependencies'
+
+  # See https://pypi.org/project/pytest-azurepipelines/
+  - script: |
+      pip install -r requirements-dev.txt
+      pytest tests -vv --cov=src --cov-branch --cov-report=term-missing --cov-report=xml:reports/coverage/coverage.xml --junitxml=reports/xunit/test-results.xml -o junit_family=xunit1 || true
+    displayName: 'Run Tests'
+    
+  - script: |
+      chmod  o+rw .
+      docker run --rm -e "EZE_APIKEY=$(EZE_APIKEY)" -e "BUILD_SOURCEBRANCHNAME=$(BUILD_SOURCEBRANCHNAME)" -e "BUILD_REPOSITORY_URI=$(BUILD_REPOSITORY_URI)" -v "$(pwd)":/data riversafe/eze-cli test -s ci
+    env:
+      EZE_APIKEY: $(EZE_APIKEY)
+    displayName: 'Run Eze against Snyk Plugin'
+
+  # https://docs.microsoft.com/azure/devops/pipelines/tasks/test/publish-test-results
+  - task: PublishTestResults@2
+    displayName: 'Publish test results'
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: 'reports/xunit/test-results.xml'
+      failTaskOnFailedTests: true
+
+  # https://docs.microsoft.com/en-gb/azure/devops/pipelines/tasks/test/publish-code-coverage-results
+  # WARNING: ado help page for version 1 which is not installed https://dev.azure.com/riversafe/DevSecOps/
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: 'Cobertura'
+      summaryFileLocation: 'reports/coverage/coverage.xml'
+      pathToSources: 'src'

@@ -1,0 +1,22 @@
+short_description:
+======================
+proprietary container scanner
+
+config_help:
+======================
+[snyk-container]
+# DOCKER_TAG str
+# Required image repository to scan
+# Optional image repository can include tag to scan
+# 
+# For detailed IMAGE details
+# See https://support.snyk.io/hc/en-us/articles/360003946917-Test-images-with-the-Snyk-Container-CLI
+# 
+# 
+DOCKER_TAG = "debian:stable"
+
+# DOCKERFILE str [OPTIONAL]
+# Optional docker file
+# maps to --file snyk argument
+# 
+DOCKERFILE = "..."

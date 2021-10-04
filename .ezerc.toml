@@ -1,0 +1,61 @@
+# ========================================
+# EXAMPLE PYTHON TOOL CONFIG
+# ========================================
+[python-bandit]
+SOURCE = "src"
+
+[python-piprot]
+REQUIREMENTS_FILES = [
+    "requirements.txt"
+]
+IGNORE_BELOW_SEVERITY = "low"
+
+[python-safety]
+REQUIREMENTS_FILES = [
+    "requirements.txt"
+]
+IGNORE_BELOW_SEVERITY = "medium"
+
+[trufflehog]
+SOURCE = ["."]
+EXCLUDE = [
+    ".*(node_modules|target|build|dist)$",
+    ".*\\.(jpe?g|png|svg|eot|ttf|exe|map|lock|woff|pytest_cache)$",
+    ".*//trufflehog-report.json$",
+    ".*\\.DS_Store",
+    "tests/"
+]
+
+[trufflehog.ci]
+INCLUDE_FULL_REASON = false
+
+[python-cyclonedx]
+REQUIREMENTS_FILE = "requirements.txt"
+
+# ========================================
+# REPORT CONFIG
+# ========================================
+[eze]
+CONSOLE_ENDPOINT = "https://lff3adj48f.execute-api.eu-west-2.amazonaws.com/staging"
+CODEBASE_ID = "eb967423-22ec-4c80-b744-6a2d061e7b6c"
+
+[console]
+PRINT_SUMMARY_ONLY = true
+
+[json]
+REPORT_FILE = "reports/eze_report.json"
+
+# ========================================
+# SCAN CONFIG
+# ========================================
+[scan]
+tools = ["python-piprot", "python-bandit", "python-safety", "python-cyclonedx", "trufflehog"]
+reporters = ["json", "console", "bom"]
+
+[scan.linux]
+tools = ["python-piprot", "python-bandit", "semgrep", "python-safety", "python-cyclonedx", "trufflehog"]
+reporters = ["json", "console", "bom"]
+
+[scan.ci]
+tools = ["python-piprot", "python-bandit", "python-safety", "python-cyclonedx", "trufflehog:ci"]
+reporters = ["console", "eze"]
