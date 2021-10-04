@@ -1,3 +1,4 @@
+[![Build Status](https://dev.azure.com/riversafe/DevSecOps/_apis/build/status/RiverSafeUK.eze-snyk-plugin?branchName=main)](https://dev.azure.com/riversafe/DevSecOps/_build/latest?definitionId=17&branchName=main)
 
 # Introduction 
 
