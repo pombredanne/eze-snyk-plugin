@@ -31,6 +31,8 @@ steps:
   - script: |
       chmod  o+rw .
       docker pull riversafe/eze-cli:latest
+      echo "BUILD_SOURCEBRANCHNAME=$BUILD_SOURCEBRANCHNAME"
+      echo "BUILD_REPOSITORY_URI=$BUILD_REPOSITORY_URI"
       docker run --rm -e "EZE_APIKEY=$EZE_APIKEY" -e "BUILD_SOURCEBRANCHNAME=$BUILD_SOURCEBRANCHNAME" -e "BUILD_REPOSITORY_URI=$BUILD_REPOSITORY_URI" -v "$(pwd)":/data riversafe/eze-cli test -s ci
     env:
       EZE_APIKEY: $(EZE_APIKEY)
